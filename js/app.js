@@ -8,7 +8,7 @@ window.addEventListener("DOMContentLoaded", () => {
             fullName: document.getElementById("fullName").value,
             age: document.getElementById("age").value,
             job: document.getElementById("job").value,
-            maritalStatus: getCheckedLabels("maritalStatus"),
+            maritalStatus: document.getElementById("maritalStatus").value,
             education: document.getElementById("education").value,
 
             homeAddress: document.getElementById("homeAddress").value,
@@ -31,9 +31,9 @@ window.addEventListener("DOMContentLoaded", () => {
             familyEvent: document.getElementById("familyEvent").value,
             currentRelationship: document.getElementById("currentRelationship").value,
 
-            alcohol: getCheckedLabels("alcohol"),
-            smoking: getCheckedLabels("smoking"),
-            drugs: getCheckedLabels("drugs"),
+            alcohol: document.getElementById("alcohol").value,
+            smoking: document.getElementById("smoking").value,
+            drugs: document.getElementById("drugs").value,
 
             stressThoughts: document.getElementById("stressThoughts").value,
             desperateExperince: document.getElementById("desperateExperince").value,
@@ -43,14 +43,6 @@ window.addEventListener("DOMContentLoaded", () => {
             signature: getSignature()
         };
 
-    }
-
-    function getCheckedLabels(name) {
-        const checked = document.querySelectorAll(`input[name="${name}"]:checked`);
-
-        return Array.from(checked).map(cb => {
-            return cb.parentElement.textContent.trim();
-        });
     }
 
     // Validation
