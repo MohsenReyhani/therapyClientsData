@@ -2,8 +2,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // Collect all form data
     function getFormData() {
+        console.log((document.getElementById("visitDate").value || "").replaceAll("/", "."));
         return {
-            visitDate: document.getElementById("visitDate").value,
+            visitDate: (document.getElementById("visitDate").value || "").replaceAll("/", "."),
             fullName: document.getElementById("fullName").value,
             age: document.getElementById("age").value,
             job: document.getElementById("job").value,
@@ -80,30 +81,43 @@ window.addEventListener("DOMContentLoaded", () => {
     jalaliDatepicker.startWatch({
         separator: "/"
     });
-    
-    // Submit
 
+    document.getElementById("visitDate").value = getTodayJalali();
+
+    function showLoading() {
+        document.getElementById("loadingOverlay").classList.remove("hidden");
+        document.getElementById("submitBtn").disabled = true;
+    }
+
+    function hideLoading() {
+        document.getElementById("loadingOverlay").classList.add("hidden");
+        document.getElementById("submitBtn").disabled = false;
+    }
+
+    // Submit
     async function submitForm() {
         const data = getFormData();
+        if (!validateForm(data)) return;
+        showLoading();
 
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz82mxLYPKJa6Z_CC6Agj02NmGjFjitXiqS0kw0vZRvKJldGhKVBxqgSgFlS_jK6Pk/exec";
+        const formData = new FormData();
+        formData.append("data", JSON.stringify(data));
+
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxYIcg5EJ43fmTl0jquHyqRXpL-eN53NnH1LPVb5Lf74PrzET0a-qsBV8IU4IOMjOEj/exec";
 
         if (!validateForm(data)) return;
 
         try {
             const response = await fetch(WEB_APP_URL, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data),
+                body: formData,
                 keepalive: true
             });
 
             const result = await response.json();
 
             if (result.success) {
-                showNotification(" فرم با موفقیت ثبت شد. ✅", "success");
+                showNotification(" فرم با موفقیت ثبت شد. ✅", "success", true);
             } else {
                 showNotification("خطا ثبت فرم ❌", "error");
             }
@@ -111,6 +125,8 @@ window.addEventListener("DOMContentLoaded", () => {
         } catch (err) {
             showNotification(" خطا اتصال ❌", "error");
             console.error(err);
+        } finally {
+            hideLoading();
         }
     }
 

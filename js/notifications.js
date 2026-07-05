@@ -1,4 +1,4 @@
-function showNotification(message, type = "info") {
+function showNotification(message, type = "info", dontRemove = false) {
     const notif = document.createElement("div");
     notif.textContent = message;
 
@@ -15,5 +15,7 @@ function showNotification(message, type = "info") {
 
     document.body.appendChild(notif);
 
-    setTimeout(() => notif.remove(), 3000);
+    if (!dontRemove) {
+        setTimeout(() => notif.remove(), 3000);
+    }
 }

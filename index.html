@@ -18,6 +18,7 @@
   <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
   <script src="js/notifications.js"></script>
+  <script src="js/jalaali.min.js"></script>
   <script src="js/jalali.js"></script>
   <script src="js/signature.js"></script>
   <script src="js/app.js"></script>
@@ -230,7 +231,7 @@
   <div class="section-title">تعهدات مراجع</div>
 
   <p class="small-note">
-    حضور به موقع در جلسات و اطلاع حداقل 24 ساعت قبل در صورت لغو، هزینه جلسه به صورت کامل دریافت میشود.
+    حضور به موقع در جلسات و اطلاع حداقل 24 ساعت قبل در صورت لغو، هزینه جلسه به صورت کامل دریافت می شود.
     <br>
     ارائه اطلاعات دقیق درباره وضعیت روانی و پزشکی
     <br> 
@@ -238,7 +239,7 @@
     <br>
     اطلاع دادن در صورت تجربه فشار روانی شدید یا رفتارهای آسیب زننده
     <br>
-    اطلاعات فقط در چارچوب درمان محرمانه است و جز در موارد قانونی خطر جدی برای خود یا دیگران افشا نمی شود/
+    اطلاعات فقط در چارچوب درمان محرمانه است و جز در موارد قانونی خطر جدی برای خود یا دیگران افشا نمی شود.
   </p>
 
   <!-- AGREEMENT -->
@@ -262,13 +263,17 @@
 
   <!-- SUBMIT -->
   <div class="text-center mt-4">
-    <button class="btn btn-primary px-5" onclick="submitForm()">
+    <button class="btn btn-primary px-5" id="submitBtn" onclick="submitForm()">
       ثبت فرم
     </button>
   </div>
 
-</div>
+  <div id="loadingOverlay" class="loading-overlay hidden">
+    <div class="loader"></div>
+    <p>در حال ثبت اطلاعات...</p>
+  </div>
 
+</div>
 
 </body>
 </html>
