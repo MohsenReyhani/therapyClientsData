@@ -1,5 +1,9 @@
 window.addEventListener("DOMContentLoaded", () => {
 
+    const WEB_APP_URL = CONFIG.WEB_APP_URL;
+
+    document.getElementById("version").textContent = CONFIG.VERSION;
+
     // Collect all form data
     function getFormData() {
         console.log((document.getElementById("visitDate").value || "").replaceAll("/", "."));
@@ -95,8 +99,6 @@ window.addEventListener("DOMContentLoaded", () => {
         const formData = new FormData();
         formData.append("data", JSON.stringify(data));
 
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxYIcg5EJ43fmTl0jquHyqRXpL-eN53NnH1LPVb5Lf74PrzET0a-qsBV8IU4IOMjOEj/exec";
-
         if (!validateForm(data)) return;
 
         try {
@@ -109,13 +111,13 @@ window.addEventListener("DOMContentLoaded", () => {
             const result = await response.json();
 
             if (result.success) {
-                showNotification(" فرم با موفقیت ثبت شد. ✅", "success", true);
+                showNotification(" فرم با موفقیت ثبت شد.", "success", true);
             } else {
-                showNotification("خطا ثبت فرم ❌", "error");
+                showNotification("خطا ثبت فرم", "error");
             }
 
         } catch (err) {
-            showNotification(" خطا اتصال ❌", "error");
+            showNotification(" خطا اتصال", "error");
             console.error(err);
         } finally {
             hideLoading();
