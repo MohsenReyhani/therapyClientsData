@@ -214,10 +214,10 @@ window.addEventListener("DOMContentLoaded", () => {
         const nationalCode = document.getElementById("nationalCode").value;
         const issuedFrom = document.getElementById("birthdayLocation").value;
 
-        document.getElementById("agreementFullName").textContent = toPersianDigits(fullName) || "....................";
-        document.getElementById("agreementFatherName").textContent = toPersianDigits(fatherName) || "....................";
+        document.getElementById("agreementFullName").textContent = fullName || "....................";
+        document.getElementById("agreementFatherName").textContent = fatherName || "....................";
         document.getElementById("agreementNationalId").textContent = nationalCode || "....................";
-        document.getElementById("agreementIssuedFrom").textContent = toPersianDigits(issuedFrom) || "....................";
+        document.getElementById("agreementIssuedFrom").textContent = issuedFrom || "....................";
     }
 
     document.getElementById("fullName").addEventListener("input", updateAgreementFields);
@@ -395,12 +395,11 @@ window.addEventListener("DOMContentLoaded", () => {
         // persian digits
         convertNumbersToPersian(element);
 
-        const canvas = await html2canvas(element, {
-            scale: 2,
-            useCORS: true,
-            allowTaint: true
-        });
-
+        // const canvas = await html2canvas(element, {
+        //     scale: 1,
+        //     useCORS: true,
+        //     allowTaint: true
+        // });
 
         const opt = {
             margin: [0.1, 0.1, 0.1, 0.1],
@@ -408,10 +407,10 @@ window.addEventListener("DOMContentLoaded", () => {
             filename: "form-" + date + ".pdf",
             image: {
                 type: "jpeg",
-                quality: 1
+                quality: 0.75
             },
             html2canvas: {
-                scale: isIOS ? 1 : 2,
+                scale: 1,
                 useCORS: true,
                 allowTaint: true,
                 logging: true
@@ -452,7 +451,7 @@ window.addEventListener("DOMContentLoaded", () => {
             const p = document.createElement("p");
 
             p.className = "pdf-field";
-            p.textContent = toPersianDigits(el.value);
+            p.textContent = el.value;
             p.dataset.pdfTemp = "true";
 
             // Copy important classes
