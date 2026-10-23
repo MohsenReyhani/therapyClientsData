@@ -91,7 +91,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
 
         if (!data.mainIssue) {
-            showNotification("لطفاً معرف را وارد کنید", "error");
+            showNotification("لطفاً مشکل اصلی را در قسمت علت مراجعه وارد کنید", "error");
             return false;
         }
 
