@@ -1,6 +1,6 @@
 // js/notification.js
 
-function showNotification(message, type = "info", dontRemove = false) {
+function showNotification(message, type = "info", dontRemove = false, hideAfter = 5) {
     const notif = document.createElement("div");
     notif.textContent = message;
     notif.className = "container-notification"
@@ -34,7 +34,7 @@ function showNotification(message, type = "info", dontRemove = false) {
             notif.style.opacity = "0";
             notif.style.transform = "translateY(10px)";
             setTimeout(() => notif.remove(), 300);
-        }, 3000);
+        }, hideAfter * 1000);
     }
 }
 

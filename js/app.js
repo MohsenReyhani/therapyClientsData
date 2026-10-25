@@ -127,10 +127,17 @@ window.addEventListener("DOMContentLoaded", () => {
         separator: "/"
     });
 
+    let isFormSubmitted = false;
+
     // SUBMIT FORM
     // send telegram pdf and message
     async function submitForm() {
         const data = getFormData();
+
+        if (isFormSubmitted) {
+            showNotification("فرم قبلاً با موفقیت ارسال شده است، نیازی به ارسال دوباره نیست.", "info", false, 10);
+            return;
+        }
 
         if (!validateForm(data)) return;
 
@@ -140,7 +147,16 @@ window.addEventListener("DOMContentLoaded", () => {
             const result = await submitPdfToTelegram(data);
 
             if (result && result.success) {
-                showNotification("فرم و فایل PDF با موفقیت ارسال شد.", "success");
+                isFormSubmitted = true;
+                var successMessage = "فرم با موفقیت ارسال شد. ممنون";
+                showNotification(successMessage, "success", false, 10);
+
+                // set the static success message
+                const msgEl = document.querySelector(".form-container .success-message");
+                if (msgEl) {
+                    msgEl.textContent = successMessage; // Notice: NO quotes around successMessage
+                }
+
             } else {
                 throw new Error(result?.error || "خطا در پاسخ سرور");
             }

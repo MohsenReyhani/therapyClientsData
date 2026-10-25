@@ -151,6 +151,10 @@ body.pdf-mode * {
     font-family: "IRANSansX", sans-serif;
 }
 
+.success-message {
+    color: rgba(35, 160, 88, 0.92);
+}
+
 
 /* =========================================================
    HEADINGS

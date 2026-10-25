@@ -4,27 +4,29 @@
 async function submitPdfToTelegram() {
 
     const data = getFormData();
-    // if (!validateForm(data)) return;
     const { pdf, opt } = await generatePDF();
-    // Convert PDF to Blob
     const blob = pdf.output("blob");
-    // Convert Blob to Base64
     const base64 = await blobToBase64(blob);
-    // Get Telegram Message in Formatted Text
     const messageText = buildTelegramTextMessage(data);
 
-    const formData = new FormData();
-    formData.append("filename", opt.filename);
-    formData.append("caption", opt.caption);
-    formData.append("pdf", base64);
-    formData.append("message", messageText);
-    
+    // Use URLSearchParams instead of FormData
+    const payload = new URLSearchParams();
+    payload.append("filename", opt.filename);
+    payload.append("caption", opt.caption);
+    payload.append("pdf", base64);
+    payload.append("message", messageText);
 
     const response = await fetch(CONFIG.WEB_APP_URL_TELEGRAM, {
         method: "POST",
-        body: formData
+        body: payload,
+        redirect: "follow" // Explicitly tell fetch to follow redirects
     });
 
-    const result = await response.json();
-    return result;
+    const result = await response.text();
+
+    try {
+        return JSON.parse(result);
+    } catch (e) {
+        throw new Error("Server response was not JSON: " + result);
+    }
 }
